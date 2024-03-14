@@ -1,0 +1,56 @@
+[PROJECT]
+Target=slave3.hex
+Processor_Text=PIC16F877
+CCSVersion=5.049
+Compiler=PCM
+[Target Data]
+FileList=slave3.c
+[slave3.c]
+Type=4
+[mru-list]
+1=slave3.c
+
+[defines]
+buildcount=4
+
+[ProjectLog]
+Days=3
+D1=18-05-2021
+D1_L=7
+D1_L1=[9332]Started Editing.
+D1_L2=[9539]Stopped Editing.
+TotalEdit=6
+TotalDebug=0
+D1_E=5
+D1_D=0
+D1_L3=[9539]Project Closed.
+D1_L4=[13320]Project Opened.
+D1_L5=[13341]Started Editing.
+D1_L6=[13346]Stopped Editing.
+D1_L7=[13346]Project Closed.
+D2=19-05-2021
+D2_L=2
+D2_L1=[11470]Project Opened.
+D2_L2=[11478]Project Closed.
+D3=20-05-2021
+D3_L=4
+D3_L1=[4083]Project Opened.
+D3_L2=[4091]Started Editing.
+D3_L3=[4093]Stopped Editing.
+D3_E=1
+D3_D=0
+D3_L4=[4093]Project Closed.
+
+[Opened Files]
+1=master.c
+t1=221
+2=slave1.c
+t2=221
+3=slave2.c
+t3=237
+4=slave3.c
+t4=237
+Count=4
+[Units]
+Count=1
+1=slave3 (main)

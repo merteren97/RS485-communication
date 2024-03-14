@@ -1,0 +1,7 @@
+>>> Warning 214 "master.c" Line 124(1,1): Operator precedance rules may not be as intended, use () to clarify
+>>> Warning 214 "master.c" Line 124(1,1): Operator precedance rules may not be as intended, use () to clarify
+>>> Warning 216 "master.c" Line 252(1,2): Interrupts disabled during call to prevent re-entrancy:  (generate_8bit_crc)
+>>> Warning 202 "master.c" Line 52(8,9): Variable never used:   j
+      Memory usage:   ROM=14%      RAM=42% - 54%
+      0 Errors,  4 Warnings.
+Build Successful.

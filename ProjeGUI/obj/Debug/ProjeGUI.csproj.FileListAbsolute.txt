@@ -1,0 +1,10 @@
+D:\Visual Studio 2012\Projects\ProjeGUI\obj\Debug\ProjeGUI.csprojAssemblyReference.cache
+D:\Visual Studio 2012\Projects\ProjeGUI\obj\Debug\ProjeGUI.Form1.resources
+D:\Visual Studio 2012\Projects\ProjeGUI\obj\Debug\ProjeGUI.Properties.Resources.resources
+D:\Visual Studio 2012\Projects\ProjeGUI\obj\Debug\ProjeGUI.csproj.GenerateResource.cache
+D:\Visual Studio 2012\Projects\ProjeGUI\obj\Debug\ProjeGUI.csproj.CoreCompileInputs.cache
+D:\Visual Studio 2012\Projects\ProjeGUI\bin\Debug\ProjeGUI.exe.config
+D:\Visual Studio 2012\Projects\ProjeGUI\bin\Debug\ProjeGUI.exe
+D:\Visual Studio 2012\Projects\ProjeGUI\bin\Debug\ProjeGUI.pdb
+D:\Visual Studio 2012\Projects\ProjeGUI\obj\Debug\ProjeGUI.exe
+D:\Visual Studio 2012\Projects\ProjeGUI\obj\Debug\ProjeGUI.pdb

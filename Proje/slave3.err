@@ -1,0 +1,4 @@
+>>> Warning 216 "slave3.c" Line 267(1,2): Interrupts disabled during call to prevent re-entrancy:  (generate_8bit_crc)
+      Memory usage:   ROM=12%      RAM=43% - 54%
+      0 Errors,  1 Warnings.
+Build Successful.

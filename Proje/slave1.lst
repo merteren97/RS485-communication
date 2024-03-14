@@ -1,0 +1,1475 @@
+CCS PCM C Compiler, Version 5.049, 5967               20-May-21 01:08
+
+               Filename:   D:\Mert\Dosyalar\2021\Dersler\Bahar Donemi\Endustriel Otomation Haberlesmesi\Proje\v1.2\slave1.lst
+
+               ROM used:   1014 words (12%)
+                           Largest free fragment is 2048
+               RAM used:   160 (43%) at main() level
+                           200 (54%) worst case
+               Stack used: 4 locations (2 in main + 2 for interrupts)
+               Stack size: 8
+
+*
+0000:  MOVLW  03
+0001:  MOVWF  0A
+0002:  GOTO   306
+0003:  NOP
+0004:  MOVWF  7F
+0005:  SWAPF  03,W
+0006:  CLRF   03
+0007:  MOVWF  21
+0008:  MOVF   0A,W
+0009:  MOVWF  20
+000A:  CLRF   0A
+000B:  MOVF   04,W
+000C:  MOVWF  22
+000D:  MOVF   77,W
+000E:  MOVWF  23
+000F:  MOVF   78,W
+0010:  MOVWF  24
+0011:  MOVF   79,W
+0012:  MOVWF  25
+0013:  MOVF   7A,W
+0014:  MOVWF  26
+0015:  BCF    03.7
+0016:  BCF    03.5
+0017:  MOVLW  8C
+0018:  MOVWF  04
+0019:  BTFSS  00.5
+001A:  GOTO   01D
+001B:  BTFSC  0C.5
+001C:  GOTO   02E
+001D:  MOVF   22,W
+001E:  MOVWF  04
+001F:  MOVF   23,W
+0020:  MOVWF  77
+0021:  MOVF   24,W
+0022:  MOVWF  78
+0023:  MOVF   25,W
+0024:  MOVWF  79
+0025:  MOVF   26,W
+0026:  MOVWF  7A
+0027:  MOVF   20,W
+0028:  MOVWF  0A
+0029:  SWAPF  21,W
+002A:  MOVWF  03
+002B:  SWAPF  7F,F
+002C:  SWAPF  7F,W
+002D:  RETFIE
+002E:  BCF    0A.3
+002F:  BCF    0A.4
+0030:  GOTO   0D7
+.................... /* 
+.................... Paketin Protokolü: 
+....................  
+.................... Address FROM | Address TO | Control | Function | Length | Data | CRC 
+....................  
+.................... Address FROM : 1 byte   (Paketin oluþturulup yollandýðý PIC adresi) 
+.................... Address TO :   1 byte   (Paketin ulaþacaðý PIC adresi) 
+.................... Control :      1 byte   (ACK ve NACK iþlemleri) 
+.................... Funtion :      1 byte   (Fonskiyon listesinden seçilecek) 
+.................... Length :       1 byte   (Data nýn uzunluðunu belirtmek için) 
+.................... Data :         0-N byte (Ýstendiði kadar uzatýlabilinen data) 
+.................... CRC :          1 byte   (8 bit CRC) 
+....................  
+.................... Komut Listesi: 
+....................  
+.................... 0x01- Motor ->Tam Tur Sað 
+.................... 0x02- Motor ->Tam Tur Sol 
+.................... 0x03- Motor ->Yarým Tur Sað 
+.................... 0x04- Motor ->Yarým Tur Sol 
+.................... 0x05- Motor ->Toggle Sað 
+.................... 0x06- Motor ->Toggle Sol 
+.................... 0x07- Motor ->Motoru durdur 
+.................... 0x08- Motor ->Hýz deðerini yazma 
+.................... */ 
+....................  
+.................... #include <16F877.h> 
+.................... //////////// Standard Header file for the PIC16F877 device //////////////// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... #device PIC16F877 
+*
+02DD:  CLRF   77
+02DE:  CLRF   78
+02DF:  BSF    03.5
+02E0:  MOVF   68,W
+02E1:  BCF    03.0
+02E2:  BTFSC  69.0
+02E3:  ADDWF  77,F
+02E4:  RRF    77,F
+02E5:  RRF    78,F
+02E6:  BTFSC  69.1
+02E7:  ADDWF  77,F
+02E8:  RRF    77,F
+02E9:  RRF    78,F
+02EA:  BTFSC  69.2
+02EB:  ADDWF  77,F
+02EC:  RRF    77,F
+02ED:  RRF    78,F
+02EE:  BTFSC  69.3
+02EF:  ADDWF  77,F
+02F0:  RRF    77,F
+02F1:  RRF    78,F
+02F2:  BTFSC  69.4
+02F3:  ADDWF  77,F
+02F4:  RRF    77,F
+02F5:  RRF    78,F
+02F6:  BTFSC  69.5
+02F7:  ADDWF  77,F
+02F8:  RRF    77,F
+02F9:  RRF    78,F
+02FA:  BTFSC  69.6
+02FB:  ADDWF  77,F
+02FC:  RRF    77,F
+02FD:  RRF    78,F
+02FE:  BTFSC  69.7
+02FF:  ADDWF  77,F
+0300:  RRF    77,F
+0301:  RRF    78,F
+0302:  BCF    03.5
+0303:  BCF    0A.3
+0304:  BCF    0A.4
+0305:  GOTO   3E1 (RETURN)
+*
+03EA:  BSF    0A.0
+03EB:  BSF    0A.1
+03EC:  BCF    0A.2
+03ED:  ADDWF  02,F
+03EE:  GOTO   34F
+03EF:  GOTO   360
+03F0:  GOTO   372
+03F1:  GOTO   384
+03F2:  GOTO   396
+03F3:  GOTO   3A8
+03F4:  GOTO   3BA
+03F5:  GOTO   3CB
+....................  
+.................... #list 
+....................  
+.................... #device ADC=16 
+....................  
+.................... #fuses XT,NOWDT,NOPROTECT,NOBROWNOUT,NOPUT,NOWRT,NODEBUG,NOCPD,NOLVP 
+.................... #use delay(crystal=4Mhz) 
+*
+0159:  MOVLW  16
+015A:  MOVWF  04
+015B:  BSF    03.7
+015C:  MOVF   00,W
+015D:  BTFSC  03.2
+015E:  GOTO   16D
+015F:  MOVLW  01
+0160:  MOVWF  78
+0161:  CLRF   77
+0162:  DECFSZ 77,F
+0163:  GOTO   162
+0164:  DECFSZ 78,F
+0165:  GOTO   161
+0166:  MOVLW  4A
+0167:  MOVWF  77
+0168:  DECFSZ 77,F
+0169:  GOTO   168
+016A:  GOTO   16B
+016B:  DECFSZ 00,F
+016C:  GOTO   15F
+016D:  RETURN
+....................  
+.................... #use rs232(baud=9600, xmit=pin_C6, rcv=pin_C7, parity=N, stop=1, TIMEOUT=10) 
+*
+0031:  MOVLW  20
+0032:  BSF    03.6
+0033:  MOVWF  26
+0034:  MOVLW  67
+0035:  MOVWF  77
+0036:  DECFSZ 77,F
+0037:  GOTO   036
+0038:  GOTO   039
+0039:  DECFSZ 26,F
+003A:  GOTO   040
+003B:  BCF    03.6
+003C:  CLRF   28
+003D:  CLRF   78
+003E:  GOTO   04D
+003F:  BSF    03.6
+0040:  BCF    03.6
+0041:  BTFSC  0C.5
+0042:  GOTO   045
+0043:  BSF    03.6
+0044:  GOTO   034
+0045:  MOVF   18,W
+0046:  MOVWF  28
+0047:  MOVF   1A,W
+0048:  MOVWF  78
+0049:  BTFSS  28.1
+004A:  GOTO   04D
+004B:  BCF    18.4
+004C:  BSF    18.4
+004D:  RETURN
+....................  
+.................... #include <crc.c> 
+.................... /////////////////////// Driver to generate CRC ////////////////////////// 
+.................... ////                                                                 //// 
+.................... ////  generate_8bit_crc(data, length, pattern)                       //// 
+.................... ////        Generates 8 bit crc from the data using the pattern.     //// 
+.................... ////                                                                 //// 
+.................... ////  generate_16bit_crc(data, length, pattern)                      //// 
+.................... ////        Generates 16 bit crc from the data using the pattern.    //// 
+.................... ////                                                                 //// 
+.................... ////  generate_32bit_crc(data, length, pattern)                      //// 
+.................... ////        Generates 32 bit crc from the data using the pattern.    //// 
+.................... ////                                                                 //// 
+.................... ///////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996,2003 Custom Computer Services         //// 
+.................... //// This source code may only be used by licensed users of the CCS  //// 
+.................... //// C compiler.  This source code may only be distributed to other  //// 
+.................... //// licensed users of the CCS C compiler.  No other use,            //// 
+.................... //// reproduction or distribution is permitted without written       //// 
+.................... //// permission.  Derivative programs created using this software    //// 
+.................... //// in object code form are not restricted in any way.              //// 
+.................... ///////////////////////////////////////////////////////////////////////// 
+....................  
+.................... #define CRC_16    0x8005      //bit pattern (1)1000 0000 0000 0101 
+.................... #define CRC_CCITT 0x1021      //bit pattern (1)0001 0000 0010 0001 
+.................... #define CRC_32    0x04C11DB7  //bit pattern (1)0000 0100 1100 0001 0001 1101 1011 0111 
+....................  
+....................  
+.................... int generate_8bit_crc(char* data, int16 length, int pattern) 
+.................... { 
+....................    int   *current_data; 
+....................    int   crc_byte; 
+....................    int16 byte_counter; 
+....................    int   bit_counter; 
+....................  
+....................    current_data = data; 
+004E:  BSF    03.6
+004F:  MOVF   24,W
+0050:  MOVWF  29
+0051:  MOVF   23,W
+0052:  MOVWF  28
+....................    crc_byte = *current_data++; 
+0053:  MOVF   29,W
+0054:  MOVWF  7A
+0055:  MOVF   28,W
+0056:  INCF   28,F
+0057:  BTFSC  03.2
+0058:  INCF   29,F
+0059:  MOVWF  04
+005A:  BCF    03.7
+005B:  BTFSC  7A.0
+005C:  BSF    03.7
+005D:  MOVF   00,W
+005E:  MOVWF  2A
+....................  
+....................    for(byte_counter=0; byte_counter < (length-1); byte_counter++) 
+005F:  CLRF   2C
+0060:  CLRF   2B
+0061:  MOVLW  01
+0062:  SUBWF  25,W
+0063:  MOVWF  77
+0064:  MOVF   26,W
+0065:  MOVWF  7A
+0066:  MOVLW  00
+0067:  BTFSS  03.0
+0068:  MOVLW  01
+0069:  SUBWF  7A,F
+006A:  MOVF   77,W
+006B:  MOVWF  78
+006C:  MOVF   2C,W
+006D:  SUBWF  7A,W
+006E:  BTFSS  03.0
+006F:  GOTO   0C3
+0070:  BTFSS  03.2
+0071:  GOTO   076
+0072:  MOVF   78,W
+0073:  SUBWF  2B,W
+0074:  BTFSC  03.0
+0075:  GOTO   0C3
+....................    { 
+....................       for(bit_counter=0; bit_counter < 8; bit_counter++) 
+0076:  CLRF   2D
+0077:  MOVF   2D,W
+0078:  SUBLW  07
+0079:  BTFSS  03.0
+007A:  GOTO   0BC
+....................       { 
+....................          if(!bit_test(crc_byte,7)) 
+007B:  BTFSC  2A.7
+007C:  GOTO   09B
+....................          { 
+....................             crc_byte <<= 1; 
+007D:  BCF    03.0
+007E:  RLF    2A,F
+....................             bit_test(*current_data, 7 - bit_counter) ? 
+....................                bit_set(crc_byte,0) : bit_clear(crc_byte,0); 
+007F:  MOVF   29,W
+0080:  MOVWF  7A
+0081:  MOVF   28,W
+0082:  MOVWF  04
+0083:  BCF    03.7
+0084:  BTFSC  29.0
+0085:  BSF    03.7
+0086:  MOVF   00,W
+0087:  MOVWF  2E
+0088:  MOVF   2D,W
+0089:  SUBLW  07
+008A:  MOVWF  2F
+008B:  MOVF   2E,W
+008C:  MOVWF  77
+008D:  MOVF   2F,W
+008E:  MOVWF  78
+008F:  BTFSC  03.2
+0090:  GOTO   095
+0091:  BCF    03.0
+0092:  RRF    77,F
+0093:  DECFSZ 78,F
+0094:  GOTO   091
+0095:  BTFSS  77.0
+0096:  GOTO   099
+0097:  BSF    2A.0
+0098:  GOTO   09A
+0099:  BCF    2A.0
+....................             continue; 
+009A:  GOTO   0BA
+....................          } 
+....................          crc_byte <<= 1; 
+009B:  BCF    03.0
+009C:  RLF    2A,F
+....................          bit_test(*current_data, 7 - bit_counter) ? 
+....................             bit_set(crc_byte,0) : bit_clear(crc_byte,0); 
+009D:  MOVF   29,W
+009E:  MOVWF  7A
+009F:  MOVF   28,W
+00A0:  MOVWF  04
+00A1:  BCF    03.7
+00A2:  BTFSC  29.0
+00A3:  BSF    03.7
+00A4:  MOVF   00,W
+00A5:  MOVWF  2E
+00A6:  MOVF   2D,W
+00A7:  SUBLW  07
+00A8:  MOVWF  2F
+00A9:  MOVF   2E,W
+00AA:  MOVWF  77
+00AB:  MOVF   2F,W
+00AC:  MOVWF  78
+00AD:  BTFSC  03.2
+00AE:  GOTO   0B3
+00AF:  BCF    03.0
+00B0:  RRF    77,F
+00B1:  DECFSZ 78,F
+00B2:  GOTO   0AF
+00B3:  BTFSS  77.0
+00B4:  GOTO   0B7
+00B5:  BSF    2A.0
+00B6:  GOTO   0B8
+00B7:  BCF    2A.0
+....................          crc_byte ^= pattern; 
+00B8:  MOVF   27,W
+00B9:  XORWF  2A,F
+00BA:  INCF   2D,F
+00BB:  GOTO   077
+....................       } 
+....................       current_data++; 
+00BC:  INCF   28,F
+00BD:  BTFSC  03.2
+00BE:  INCF   29,F
+00BF:  INCF   2B,F
+00C0:  BTFSC  03.2
+00C1:  INCF   2C,F
+00C2:  GOTO   061
+....................    } 
+....................    for(bit_counter=0; bit_counter < 8; bit_counter++) 
+00C3:  CLRF   2D
+00C4:  MOVF   2D,W
+00C5:  SUBLW  07
+00C6:  BTFSS  03.0
+00C7:  GOTO   0D3
+....................    { 
+....................       if(!bit_test(crc_byte,7)) 
+00C8:  BTFSC  2A.7
+00C9:  GOTO   0CD
+....................       { 
+....................          crc_byte <<= 1; 
+00CA:  BCF    03.0
+00CB:  RLF    2A,F
+....................          continue; 
+00CC:  GOTO   0D1
+....................       } 
+....................       crc_byte <<= 1; 
+00CD:  BCF    03.0
+00CE:  RLF    2A,F
+....................       crc_byte ^= pattern; 
+00CF:  MOVF   27,W
+00D0:  XORWF  2A,F
+00D1:  INCF   2D,F
+00D2:  GOTO   0C4
+....................    } 
+....................    return crc_byte; 
+00D3:  MOVF   2A,W
+00D4:  MOVWF  78
+00D5:  BCF    03.6
+00D6:  RETURN
+.................... } 
+....................  
+....................  
+.................... int16 generate_16bit_crc(char* data, int16 length, int16 pattern) 
+.................... { 
+....................    int   *current_data; 
+....................    int16 crc_Dbyte; 
+....................    int16 byte_counter; 
+....................    int   bit_counter; 
+....................  
+....................    current_data = data + 2; 
+....................    crc_Dbyte =  make16(data[0], data[1]); 
+....................  
+....................    for(byte_counter=0; byte_counter < (length-2); byte_counter++) 
+....................    { 
+....................       for(bit_counter=0; bit_counter < 8; bit_counter++) 
+....................       { 
+....................          if(!bit_test(crc_Dbyte,15)) 
+....................          { 
+....................             crc_Dbyte <<= 1; 
+....................             bit_test(*current_data, 7 - bit_counter) ? 
+....................                bit_set(crc_Dbyte,0) : bit_clear(crc_Dbyte,0); 
+....................             continue; 
+....................          } 
+....................          crc_Dbyte <<= 1; 
+....................          bit_test(*current_data, 7 - bit_counter) ? 
+....................             bit_set(crc_Dbyte,0) : bit_clear(crc_Dbyte,0); 
+....................          crc_Dbyte ^= pattern; 
+....................       } 
+....................       current_data++; 
+....................    } 
+....................  
+....................    for(bit_counter=0; bit_counter < 16; bit_counter++) 
+....................    { 
+....................       if(!bit_test(crc_Dbyte,15)) 
+....................       { 
+....................          crc_Dbyte <<= 1; 
+....................          continue; 
+....................       } 
+....................       crc_Dbyte <<= 1; 
+....................       crc_Dbyte ^= pattern; 
+....................    } 
+....................  
+....................    return crc_Dbyte; 
+.................... } 
+....................  
+.................... int32 generate_32bit_crc(char* data, int16 length, int32 pattern) 
+.................... { 
+....................    int   *current_data; 
+....................    int32 crc_Dbyte; 
+....................    int16 byte_counter; 
+....................    int   bit_counter; 
+....................  
+....................    current_data = data + 4; 
+....................    crc_Dbyte =  make32(data[0], data[1], data[2], data[3]); 
+....................  
+....................    for(byte_counter=0; byte_counter < (length-4); byte_counter++) 
+....................    { 
+....................       for(bit_counter=0; bit_counter < 8; bit_counter++) 
+....................       { 
+....................          if(!bit_test(crc_Dbyte,31)) 
+....................          { 
+....................          crc_Dbyte <<= 1; 
+....................          bit_test(*current_data, 7 - bit_counter) ? 
+....................             bit_set(crc_Dbyte,0) : bit_clear(crc_Dbyte,0); 
+....................             continue; 
+....................          } 
+....................          crc_Dbyte <<= 1; 
+....................          bit_test(*current_data, 7 - bit_counter) ? 
+....................             bit_set(crc_Dbyte,0) : bit_clear(crc_Dbyte,0); 
+....................          crc_Dbyte ^= pattern; 
+....................       } 
+....................       current_data++; 
+....................    } 
+....................  
+....................    for(bit_counter=0; bit_counter < 32; bit_counter++) 
+....................    { 
+....................       if(!bit_test(crc_Dbyte,31)) 
+....................       { 
+....................          crc_Dbyte <<= 1; 
+....................          continue; 
+....................       } 
+....................       crc_Dbyte <<= 1; 
+....................       crc_Dbyte ^= pattern; 
+....................    } 
+....................  
+....................    return crc_Dbyte; 
+.................... } 
+....................  
+....................  
+.................... #define MASTER 0x11 
+.................... #define SLAVE1 0x22 
+.................... #define SLAVE2 0x33 
+.................... #define SLAVE3 0x44 
+.................... #define ACK 0x01 
+.................... #define NACK 0xFF 
+.................... #define BUFFER_SIZE 64 
+.................... #define CRC_KEY 0x55 
+....................  
+.................... #define gonder pin_C4 
+....................  
+.................... int buffer_tx[BUFFER_SIZE]; 
+.................... int buffer_rx[BUFFER_SIZE]; 
+.................... char i,j,k,num; 
+.................... char P_Length, Error, new_packet; 
+....................  
+.................... char step[8]={0b00000001,0b00000011,0b00000010,0b00000110,0b000000100,0b00001100,0b00001000,0b00001001}; 
+*
+031C:  MOVLW  01
+031D:  MOVWF  60
+031E:  MOVLW  03
+031F:  MOVWF  61
+0320:  MOVLW  02
+0321:  MOVWF  62
+0322:  MOVLW  06
+0323:  MOVWF  63
+0324:  MOVLW  04
+0325:  MOVWF  64
+0326:  MOVLW  0C
+0327:  MOVWF  65
+0328:  MOVLW  08
+0329:  MOVWF  66
+032A:  MOVLW  09
+032B:  MOVWF  67
+.................... char speed=10; 
+.................... char toggle; 
+....................  
+.................... #int_RDA 
+.................... void iletisim() 
+.................... { 
+....................    new_packet=FALSE; 
+*
+00D7:  CLRF   6F
+....................    buffer_rx[0] = getc(); // kimden 
+00D8:  CALL   031
+00D9:  MOVF   78,W
+00DA:  BSF    03.5
+00DB:  MOVWF  20
+....................    buffer_rx[1] = getc(); // hedefimiz 
+00DC:  BCF    03.5
+00DD:  CALL   031
+00DE:  MOVF   78,W
+00DF:  BSF    03.5
+00E0:  MOVWF  21
+....................    if(buffer_rx[1] == SLAVE1) 
+00E1:  MOVF   21,W
+00E2:  SUBLW  22
+00E3:  BTFSS  03.2
+00E4:  GOTO   154
+....................    { 
+....................       buffer_rx[2] = getc(); // ack 
+00E5:  BCF    03.5
+00E6:  CALL   031
+00E7:  MOVF   78,W
+00E8:  BSF    03.5
+00E9:  MOVWF  22
+....................       buffer_rx[3] = getc(); // fonksiyon 
+00EA:  BCF    03.5
+00EB:  CALL   031
+00EC:  MOVF   78,W
+00ED:  BSF    03.5
+00EE:  MOVWF  23
+....................       buffer_rx[4] = getc(); // datanýn uzunluðu 
+00EF:  BCF    03.5
+00F0:  CALL   031
+00F1:  MOVF   78,W
+00F2:  BSF    03.5
+00F3:  MOVWF  24
+....................        
+....................       for(k=0; k<(buffer_rx[4]+1); k++) //data larýn alýnmasý 
+00F4:  BCF    03.5
+00F5:  CLRF   6B
+00F6:  MOVLW  01
+00F7:  BSF    03.5
+00F8:  ADDWF  24,W
+00F9:  BCF    03.5
+00FA:  SUBWF  6B,W
+00FB:  BTFSC  03.0
+00FC:  GOTO   116
+....................          buffer_rx[k+5] = getc(); 
+00FD:  MOVLW  05
+00FE:  ADDWF  6B,W
+00FF:  ADDLW  A0
+0100:  MOVWF  04
+0101:  BCF    03.7
+0102:  BSF    03.6
+0103:  CLRF   25
+0104:  MOVF   04,W
+0105:  MOVWF  24
+0106:  BCF    25.0
+0107:  BTFSC  03.7
+0108:  BSF    25.0
+0109:  BCF    03.6
+010A:  CALL   031
+010B:  BSF    03.6
+010C:  MOVF   24,W
+010D:  MOVWF  04
+010E:  BCF    03.7
+010F:  BTFSC  25.0
+0110:  BSF    03.7
+0111:  MOVF   78,W
+0112:  MOVWF  00
+0113:  BCF    03.6
+0114:  INCF   6B,F
+0115:  GOTO   0F6
+....................           
+....................       P_Length = 6+buffer_rx[4]; // Paketin uzunluðu 
+0116:  MOVLW  06
+0117:  BSF    03.5
+0118:  ADDWF  24,W
+0119:  BCF    03.5
+011A:  MOVWF  6D
+....................  
+....................       Error = FALSE; 
+011B:  CLRF   6E
+....................       if(buffer_rx[k+5] != generate_8bit_crc(buffer_rx, P_Length, CRC_KEY)) // CRC kontrolü 
+011C:  MOVLW  05
+011D:  ADDWF  6B,W
+011E:  ADDLW  A0
+011F:  MOVWF  04
+0120:  BCF    03.7
+0121:  MOVF   00,W
+0122:  BSF    03.6
+0123:  MOVWF  22
+0124:  CLRF   24
+0125:  MOVLW  A0
+0126:  MOVWF  23
+0127:  CLRF   26
+0128:  BCF    03.6
+0129:  MOVF   6D,W
+012A:  BSF    03.6
+012B:  MOVWF  25
+012C:  MOVLW  55
+012D:  MOVWF  27
+012E:  BCF    03.6
+012F:  CALL   04E
+0130:  MOVF   78,W
+0131:  BSF    03.6
+0132:  SUBWF  22,W
+0133:  BTFSC  03.2
+0134:  GOTO   139
+....................          Error = TRUE; 
+0135:  MOVLW  01
+0136:  BCF    03.6
+0137:  MOVWF  6E
+0138:  BSF    03.6
+....................        
+....................       if(buffer_rx[1] == SLAVE1 && Error == FALSE) 
+0139:  BSF    03.5
+013A:  BCF    03.6
+013B:  MOVF   21,W
+013C:  SUBLW  22
+013D:  BTFSS  03.2
+013E:  GOTO   148
+013F:  BCF    03.5
+0140:  MOVF   6E,F
+0141:  BTFSC  03.2
+0142:  GOTO   145
+0143:  BSF    03.5
+0144:  GOTO   148
+....................          new_packet = TRUE; 
+0145:  MOVLW  01
+0146:  MOVWF  6F
+0147:  BSF    03.5
+....................           
+....................       if(buffer_rx[3] == 0x07 && Error == FALSE) // Eðer fonksiyon 0x07 gelirse motor durdur. 
+0148:  MOVF   23,W
+0149:  SUBLW  07
+014A:  BTFSS  03.2
+014B:  GOTO   154
+014C:  BCF    03.5
+014D:  MOVF   6E,F
+014E:  BTFSC  03.2
+014F:  GOTO   152
+0150:  BSF    03.5
+0151:  GOTO   154
+....................          toggle = FALSE; 
+0152:  CLRF   71
+0153:  BSF    03.5
+....................    } 
+0154:  BCF    03.5
+0155:  BCF    0C.5
+0156:  BCF    0A.3
+0157:  BCF    0A.4
+0158:  GOTO   01D
+.................... } 
+....................  
+.................... void send_packet(int* packet_ptr, int16 packet_length) 
+.................... { 
+....................    int *ptr; 
+....................    int CRC, i; 
+....................     
+....................    output_high(gonder); 
+*
+0193:  BCF    72.4
+0194:  MOVF   72,W
+0195:  BSF    03.5
+0196:  BCF    03.6
+0197:  MOVWF  07
+0198:  BCF    03.5
+0199:  BSF    07.4
+....................    ptr = packet_ptr; 
+019A:  BSF    03.5
+019B:  MOVF   6E,W
+019C:  BCF    03.5
+019D:  BSF    03.6
+019E:  MOVWF  13
+019F:  BSF    03.5
+01A0:  BCF    03.6
+01A1:  MOVF   6D,W
+01A2:  BCF    03.5
+01A3:  BSF    03.6
+01A4:  MOVWF  12
+01A5:  BCF    03.6
+01A6:  CLRF   27
+01A7:  BTFSC  0B.7
+01A8:  BSF    27.7
+01A9:  BCF    0B.7
+....................     
+....................    CRC = generate_8bit_crc(ptr, packet_length, CRC_KEY); 
+01AA:  BSF    03.6
+01AB:  MOVF   13,W
+01AC:  MOVWF  24
+01AD:  MOVF   12,W
+01AE:  MOVWF  23
+01AF:  MOVF   11,W
+01B0:  MOVWF  26
+01B1:  MOVF   10,W
+01B2:  MOVWF  25
+01B3:  MOVLW  55
+01B4:  MOVWF  27
+01B5:  BCF    03.6
+01B6:  CALL   04E
+01B7:  BTFSC  27.7
+01B8:  BSF    0B.7
+01B9:  MOVF   78,W
+01BA:  BSF    03.5
+01BB:  MOVWF  6F
+....................     
+....................    for(i=0; i<packet_length; i++) 
+01BC:  BCF    03.5
+01BD:  BSF    03.6
+01BE:  CLRF   14
+01BF:  MOVF   11,F
+01C0:  BTFSS  03.2
+01C1:  GOTO   1C6
+01C2:  MOVF   10,W
+01C3:  SUBWF  14,W
+01C4:  BTFSC  03.0
+01C5:  GOTO   1D9
+....................       putc(packet_ptr[i]); 
+01C6:  MOVF   14,W
+01C7:  BSF    03.5
+01C8:  BCF    03.6
+01C9:  ADDWF  6D,W
+01CA:  MOVWF  04
+01CB:  BCF    03.7
+01CC:  BTFSC  6E.0
+01CD:  BSF    03.7
+01CE:  MOVF   00,W
+01CF:  BCF    03.5
+01D0:  BSF    03.6
+01D1:  MOVWF  15
+01D2:  BCF    03.6
+01D3:  BTFSS  0C.4
+01D4:  GOTO   1D3
+01D5:  MOVWF  19
+01D6:  BSF    03.6
+01D7:  INCF   14,F
+01D8:  GOTO   1BF
+....................    clear_interrupt(INT_TBE); 
+01D9:  BCF    03.6
+01DA:  BCF    0C.4
+....................    putc(CRC); 
+01DB:  BSF    03.5
+01DC:  MOVF   6F,W
+01DD:  BCF    03.5
+01DE:  BTFSS  0C.4
+01DF:  GOTO   1DE
+01E0:  MOVWF  19
+....................     
+....................    while(!interrupt_active(INT_TBE)); 
+01E1:  BTFSS  0C.4
+01E2:  GOTO   1E1
+....................    delay_ms(1); 
+01E3:  MOVLW  01
+01E4:  BSF    03.6
+01E5:  MOVWF  16
+01E6:  BCF    03.6
+01E7:  CALL   159
+....................    output_low(gonder); 
+01E8:  BCF    72.4
+01E9:  MOVF   72,W
+01EA:  BSF    03.5
+01EB:  MOVWF  07
+01EC:  BCF    03.5
+01ED:  BCF    07.4
+.................... } 
+....................  
+.................... void create_packet(char slv, char func, char len, char data) 
+.................... { 
+....................    new_packet = FALSE; 
+*
+016E:  CLRF   6F
+....................    buffer_tx[0] = slv; 
+016F:  BSF    03.5
+0170:  MOVF   68,W
+0171:  BCF    03.5
+0172:  MOVWF  29
+....................    buffer_tx[1] = MASTER; 
+0173:  MOVLW  11
+0174:  MOVWF  2A
+....................    buffer_tx[2] = ACK; 
+0175:  MOVLW  01
+0176:  MOVWF  2B
+....................    buffer_tx[3] = func; 
+0177:  BSF    03.5
+0178:  MOVF   69,W
+0179:  BCF    03.5
+017A:  MOVWF  2C
+....................    buffer_tx[4] = len; 
+017B:  BSF    03.5
+017C:  MOVF   6A,W
+017D:  BCF    03.5
+017E:  MOVWF  2D
+....................    buffer_tx[5] = data; 
+017F:  BSF    03.5
+0180:  MOVF   6B,W
+0181:  BCF    03.5
+0182:  MOVWF  2E
+....................    send_packet(buffer_tx, 5+len); 
+0183:  MOVLW  05
+0184:  BSF    03.5
+0185:  ADDWF  6A,W
+0186:  MOVWF  6C
+0187:  CLRF   6E
+0188:  MOVLW  29
+0189:  MOVWF  6D
+018A:  BCF    03.5
+018B:  BSF    03.6
+018C:  CLRF   11
+018D:  BSF    03.5
+018E:  BCF    03.6
+018F:  MOVF   6C,W
+0190:  BCF    03.5
+0191:  BSF    03.6
+0192:  MOVWF  10
+*
+01EE:  RETURN
+.................... } 
+....................  
+.................... void tam_tur_sag() 
+.................... { 
+....................    for(i=0; i<6; i++) 
+01EF:  CLRF   69
+01F0:  MOVF   69,W
+01F1:  SUBLW  05
+01F2:  BTFSS  03.0
+01F3:  GOTO   212
+....................    { 
+....................       for(j=0; j<8; j++) 
+01F4:  CLRF   6A
+01F5:  MOVF   6A,W
+01F6:  SUBLW  07
+01F7:  BTFSS  03.0
+01F8:  GOTO   210
+....................       { 
+....................          delay_ms(speed); 
+01F9:  MOVF   70,W
+01FA:  BSF    03.6
+01FB:  MOVWF  16
+01FC:  BCF    03.6
+01FD:  CALL   159
+....................          num++; 
+01FE:  INCF   6C,F
+....................          if(num == 8) 
+01FF:  MOVF   6C,W
+0200:  SUBLW  08
+0201:  BTFSC  03.2
+....................             num=0; 
+0202:  CLRF   6C
+....................          output_d(step[num]); 
+0203:  MOVLW  E0
+0204:  ADDWF  6C,W
+0205:  MOVWF  04
+0206:  BCF    03.7
+0207:  MOVF   00,W
+0208:  BSF    03.5
+0209:  MOVWF  68
+020A:  CLRF   08
+020B:  MOVF   68,W
+020C:  BCF    03.5
+020D:  MOVWF  08
+020E:  INCF   6A,F
+020F:  GOTO   1F5
+....................       } 
+0210:  INCF   69,F
+0211:  GOTO   1F0
+....................    }    
+0212:  BCF    0A.3
+0213:  BCF    0A.4
+0214:  GOTO   35E (RETURN)
+.................... } 
+....................  
+.................... void tam_tur_sol() 
+.................... { 
+....................    for(i=0; i<6; i++) 
+0215:  CLRF   69
+0216:  MOVF   69,W
+0217:  SUBLW  05
+0218:  BTFSS  03.0
+0219:  GOTO   23A
+....................    { 
+....................       for(j=0; j<8; j++) 
+021A:  CLRF   6A
+021B:  MOVF   6A,W
+021C:  SUBLW  07
+021D:  BTFSS  03.0
+021E:  GOTO   238
+....................       { 
+....................          delay_ms(speed); 
+021F:  MOVF   70,W
+0220:  BSF    03.6
+0221:  MOVWF  16
+0222:  BCF    03.6
+0223:  CALL   159
+....................          num--; 
+0224:  DECF   6C,F
+....................          if(num==-1) 
+0225:  MOVF   6C,W
+0226:  SUBLW  FF
+0227:  BTFSS  03.2
+0228:  GOTO   22B
+....................             num=7; 
+0229:  MOVLW  07
+022A:  MOVWF  6C
+....................          output_d(step[num]); 
+022B:  MOVLW  E0
+022C:  ADDWF  6C,W
+022D:  MOVWF  04
+022E:  BCF    03.7
+022F:  MOVF   00,W
+0230:  BSF    03.5
+0231:  MOVWF  68
+0232:  CLRF   08
+0233:  MOVF   68,W
+0234:  BCF    03.5
+0235:  MOVWF  08
+0236:  INCF   6A,F
+0237:  GOTO   21B
+....................       } 
+0238:  INCF   69,F
+0239:  GOTO   216
+....................    } 
+023A:  BCF    0A.3
+023B:  BCF    0A.4
+023C:  GOTO   370 (RETURN)
+.................... } 
+....................  
+.................... void yarim_tur_sag() 
+.................... { 
+....................    for(i=0; i<3; i++) 
+023D:  CLRF   69
+023E:  MOVF   69,W
+023F:  SUBLW  02
+0240:  BTFSS  03.0
+0241:  GOTO   260
+....................    { 
+....................       for(j=0; j<8; j++) 
+0242:  CLRF   6A
+0243:  MOVF   6A,W
+0244:  SUBLW  07
+0245:  BTFSS  03.0
+0246:  GOTO   25E
+....................       { 
+....................          delay_ms(speed); 
+0247:  MOVF   70,W
+0248:  BSF    03.6
+0249:  MOVWF  16
+024A:  BCF    03.6
+024B:  CALL   159
+....................          num++; 
+024C:  INCF   6C,F
+....................          if(num == 8) 
+024D:  MOVF   6C,W
+024E:  SUBLW  08
+024F:  BTFSC  03.2
+....................             num=0; 
+0250:  CLRF   6C
+....................          output_d(step[num]); 
+0251:  MOVLW  E0
+0252:  ADDWF  6C,W
+0253:  MOVWF  04
+0254:  BCF    03.7
+0255:  MOVF   00,W
+0256:  BSF    03.5
+0257:  MOVWF  68
+0258:  CLRF   08
+0259:  MOVF   68,W
+025A:  BCF    03.5
+025B:  MOVWF  08
+025C:  INCF   6A,F
+025D:  GOTO   243
+....................       } 
+025E:  INCF   69,F
+025F:  GOTO   23E
+....................    }    
+0260:  BCF    0A.3
+0261:  BCF    0A.4
+0262:  GOTO   382 (RETURN)
+.................... } 
+....................  
+.................... void yarim_tur_sol() 
+.................... { 
+....................    for(i=0; i<3; i++) 
+0263:  CLRF   69
+0264:  MOVF   69,W
+0265:  SUBLW  02
+0266:  BTFSS  03.0
+0267:  GOTO   288
+....................    { 
+....................       for(j=0; j<8; j++) 
+0268:  CLRF   6A
+0269:  MOVF   6A,W
+026A:  SUBLW  07
+026B:  BTFSS  03.0
+026C:  GOTO   286
+....................       { 
+....................          delay_ms(speed); 
+026D:  MOVF   70,W
+026E:  BSF    03.6
+026F:  MOVWF  16
+0270:  BCF    03.6
+0271:  CALL   159
+....................          num--; 
+0272:  DECF   6C,F
+....................          if(num==-1) 
+0273:  MOVF   6C,W
+0274:  SUBLW  FF
+0275:  BTFSS  03.2
+0276:  GOTO   279
+....................             num=7; 
+0277:  MOVLW  07
+0278:  MOVWF  6C
+....................          output_d(step[num]); 
+0279:  MOVLW  E0
+027A:  ADDWF  6C,W
+027B:  MOVWF  04
+027C:  BCF    03.7
+027D:  MOVF   00,W
+027E:  BSF    03.5
+027F:  MOVWF  68
+0280:  CLRF   08
+0281:  MOVF   68,W
+0282:  BCF    03.5
+0283:  MOVWF  08
+0284:  INCF   6A,F
+0285:  GOTO   269
+....................       } 
+0286:  INCF   69,F
+0287:  GOTO   264
+....................    } 
+0288:  BCF    0A.3
+0289:  BCF    0A.4
+028A:  GOTO   394 (RETURN)
+.................... } 
+....................  
+.................... void toggle_sag() 
+.................... { 
+....................    toggle = TRUE; 
+028B:  MOVLW  01
+028C:  MOVWF  71
+....................    while(toggle) 
+028D:  MOVF   71,F
+028E:  BTFSC  03.2
+028F:  GOTO   2A6
+....................    { 
+....................       delay_ms(speed); 
+0290:  MOVF   70,W
+0291:  BSF    03.6
+0292:  MOVWF  16
+0293:  BCF    03.6
+0294:  CALL   159
+....................       num++; 
+0295:  INCF   6C,F
+....................       if(num == 8) 
+0296:  MOVF   6C,W
+0297:  SUBLW  08
+0298:  BTFSC  03.2
+....................          num=0; 
+0299:  CLRF   6C
+....................       output_d(step[num]); 
+029A:  MOVLW  E0
+029B:  ADDWF  6C,W
+029C:  MOVWF  04
+029D:  BCF    03.7
+029E:  MOVF   00,W
+029F:  BSF    03.5
+02A0:  MOVWF  68
+02A1:  CLRF   08
+02A2:  MOVF   68,W
+02A3:  BCF    03.5
+02A4:  MOVWF  08
+02A5:  GOTO   28D
+....................    } 
+....................    create_packet(SLAVE1,0x07,1,0); // ACK 
+02A6:  MOVLW  22
+02A7:  BSF    03.5
+02A8:  MOVWF  68
+02A9:  MOVLW  07
+02AA:  MOVWF  69
+02AB:  MOVLW  01
+02AC:  MOVWF  6A
+02AD:  CLRF   6B
+02AE:  BCF    03.5
+02AF:  CALL   16E
+02B0:  BCF    0A.3
+02B1:  BCF    0A.4
+02B2:  GOTO   3A6 (RETURN)
+.................... } 
+....................  
+.................... void toggle_sol() 
+.................... { 
+....................    toggle = TRUE; 
+02B3:  MOVLW  01
+02B4:  MOVWF  71
+....................    while(toggle) 
+02B5:  MOVF   71,F
+02B6:  BTFSC  03.2
+02B7:  GOTO   2D0
+....................    { 
+....................       delay_ms(speed); 
+02B8:  MOVF   70,W
+02B9:  BSF    03.6
+02BA:  MOVWF  16
+02BB:  BCF    03.6
+02BC:  CALL   159
+....................       num--; 
+02BD:  DECF   6C,F
+....................       if(num==-1) 
+02BE:  MOVF   6C,W
+02BF:  SUBLW  FF
+02C0:  BTFSS  03.2
+02C1:  GOTO   2C4
+....................          num=7; 
+02C2:  MOVLW  07
+02C3:  MOVWF  6C
+....................       output_d(step[num]); 
+02C4:  MOVLW  E0
+02C5:  ADDWF  6C,W
+02C6:  MOVWF  04
+02C7:  BCF    03.7
+02C8:  MOVF   00,W
+02C9:  BSF    03.5
+02CA:  MOVWF  68
+02CB:  CLRF   08
+02CC:  MOVF   68,W
+02CD:  BCF    03.5
+02CE:  MOVWF  08
+02CF:  GOTO   2B5
+....................    } 
+....................    create_packet(SLAVE1,0x07,1,0); // ACK 
+02D0:  MOVLW  22
+02D1:  BSF    03.5
+02D2:  MOVWF  68
+02D3:  MOVLW  07
+02D4:  MOVWF  69
+02D5:  MOVLW  01
+02D6:  MOVWF  6A
+02D7:  CLRF   6B
+02D8:  BCF    03.5
+02D9:  CALL   16E
+02DA:  BCF    0A.3
+02DB:  BCF    0A.4
+02DC:  GOTO   3B8 (RETURN)
+.................... } 
+....................  
+.................... void main() 
+*
+0306:  MOVF   03,W
+0307:  ANDLW  1F
+0308:  MOVWF  03
+0309:  CLRF   28
+030A:  MOVLW  19
+030B:  BSF    03.5
+030C:  MOVWF  19
+030D:  MOVLW  A6
+030E:  MOVWF  18
+030F:  MOVLW  90
+0310:  BCF    03.5
+0311:  MOVWF  18
+0312:  MOVLW  0A
+0313:  MOVWF  70
+0314:  MOVLW  FF
+0315:  MOVWF  72
+0316:  BSF    03.5
+0317:  BSF    1F.0
+0318:  BSF    1F.1
+0319:  BSF    1F.2
+031A:  BCF    1F.3
+031B:  BCF    03.7
+.................... { 
+....................    output_low(gonder); 
+*
+032C:  BCF    72.4
+032D:  MOVF   72,W
+032E:  MOVWF  07
+032F:  BCF    03.5
+0330:  BCF    07.4
+....................    enable_interrupts(GLOBAL); 
+0331:  MOVLW  C0
+0332:  IORWF  0B,F
+....................    clear_interrupt(INT_RDA); 
+0333:  MOVF   1A,W
+....................    enable_interrupts(INT_RDA); 
+0334:  BSF    03.5
+0335:  BSF    0C.5
+....................     
+....................    output_d(step[5]); 
+0336:  CLRF   08
+0337:  MOVF   65,W
+0338:  BCF    03.5
+0339:  MOVWF  08
+....................    num = 5; 
+033A:  MOVLW  05
+033B:  MOVWF  6C
+....................    toggle = FALSE; 
+033C:  CLRF   71
+....................     
+....................    while(TRUE) 
+....................    { 
+....................       output_low(gonder); 
+033D:  BCF    72.4
+033E:  MOVF   72,W
+033F:  BSF    03.5
+0340:  MOVWF  07
+0341:  BCF    03.5
+0342:  BCF    07.4
+....................        
+....................       if(new_packet){     
+0343:  MOVF   6F,F
+0344:  BTFSC  03.2
+0345:  GOTO   3E8
+....................          switch(buffer_rx[3]) 
+0346:  MOVLW  01
+0347:  BSF    03.5
+0348:  SUBWF  23,W
+0349:  ADDLW  F8
+034A:  BTFSC  03.0
+034B:  GOTO   3E6
+034C:  ADDLW  08
+034D:  BCF    03.5
+034E:  GOTO   3EA
+....................          { 
+....................             case 0x01: 
+....................                delay_ms(20); 
+034F:  MOVLW  14
+0350:  BSF    03.6
+0351:  MOVWF  16
+0352:  BCF    03.6
+0353:  CALL   159
+....................                create_packet(SLAVE1,0x01,1,0); 
+0354:  MOVLW  22
+0355:  BSF    03.5
+0356:  MOVWF  68
+0357:  MOVLW  01
+0358:  MOVWF  69
+0359:  MOVWF  6A
+035A:  CLRF   6B
+035B:  BCF    03.5
+035C:  CALL   16E
+....................                tam_tur_sag(); 
+035D:  GOTO   1EF
+....................                break; 
+035E:  BSF    03.5
+035F:  GOTO   3E6
+....................             case 0x02: 
+....................                delay_ms(20); 
+0360:  MOVLW  14
+0361:  BSF    03.6
+0362:  MOVWF  16
+0363:  BCF    03.6
+0364:  CALL   159
+....................                create_packet(SLAVE1,0x02,1,0); 
+0365:  MOVLW  22
+0366:  BSF    03.5
+0367:  MOVWF  68
+0368:  MOVLW  02
+0369:  MOVWF  69
+036A:  MOVLW  01
+036B:  MOVWF  6A
+036C:  CLRF   6B
+036D:  BCF    03.5
+036E:  CALL   16E
+....................                tam_tur_sol(); 
+036F:  GOTO   215
+....................                break; 
+0370:  BSF    03.5
+0371:  GOTO   3E6
+....................             case 0x03: 
+....................                delay_ms(20); 
+0372:  MOVLW  14
+0373:  BSF    03.6
+0374:  MOVWF  16
+0375:  BCF    03.6
+0376:  CALL   159
+....................                create_packet(SLAVE1,0x03,1,0); 
+0377:  MOVLW  22
+0378:  BSF    03.5
+0379:  MOVWF  68
+037A:  MOVLW  03
+037B:  MOVWF  69
+037C:  MOVLW  01
+037D:  MOVWF  6A
+037E:  CLRF   6B
+037F:  BCF    03.5
+0380:  CALL   16E
+....................                yarim_tur_sag(); 
+0381:  GOTO   23D
+....................                break; 
+0382:  BSF    03.5
+0383:  GOTO   3E6
+....................             case 0x04: 
+....................                delay_ms(20); 
+0384:  MOVLW  14
+0385:  BSF    03.6
+0386:  MOVWF  16
+0387:  BCF    03.6
+0388:  CALL   159
+....................                create_packet(SLAVE1,0x04,1,0); 
+0389:  MOVLW  22
+038A:  BSF    03.5
+038B:  MOVWF  68
+038C:  MOVLW  04
+038D:  MOVWF  69
+038E:  MOVLW  01
+038F:  MOVWF  6A
+0390:  CLRF   6B
+0391:  BCF    03.5
+0392:  CALL   16E
+....................                yarim_tur_sol(); 
+0393:  GOTO   263
+....................                break; 
+0394:  BSF    03.5
+0395:  GOTO   3E6
+....................             case 0x05: 
+....................                delay_ms(20); 
+0396:  MOVLW  14
+0397:  BSF    03.6
+0398:  MOVWF  16
+0399:  BCF    03.6
+039A:  CALL   159
+....................                create_packet(SLAVE1,0x05,1,0); 
+039B:  MOVLW  22
+039C:  BSF    03.5
+039D:  MOVWF  68
+039E:  MOVLW  05
+039F:  MOVWF  69
+03A0:  MOVLW  01
+03A1:  MOVWF  6A
+03A2:  CLRF   6B
+03A3:  BCF    03.5
+03A4:  CALL   16E
+....................                toggle_sag(); 
+03A5:  GOTO   28B
+....................                break; 
+03A6:  BSF    03.5
+03A7:  GOTO   3E6
+....................             case 0x06: 
+....................                delay_ms(20); 
+03A8:  MOVLW  14
+03A9:  BSF    03.6
+03AA:  MOVWF  16
+03AB:  BCF    03.6
+03AC:  CALL   159
+....................                create_packet(SLAVE1,0x06,1,0); 
+03AD:  MOVLW  22
+03AE:  BSF    03.5
+03AF:  MOVWF  68
+03B0:  MOVLW  06
+03B1:  MOVWF  69
+03B2:  MOVLW  01
+03B3:  MOVWF  6A
+03B4:  CLRF   6B
+03B5:  BCF    03.5
+03B6:  CALL   16E
+....................                toggle_sol(); 
+03B7:  GOTO   2B3
+....................                break; 
+03B8:  BSF    03.5
+03B9:  GOTO   3E6
+....................             case 0x07: 
+....................                delay_ms(20); 
+03BA:  MOVLW  14
+03BB:  BSF    03.6
+03BC:  MOVWF  16
+03BD:  BCF    03.6
+03BE:  CALL   159
+....................                create_packet(SLAVE1,0x07,1,0); 
+03BF:  MOVLW  22
+03C0:  BSF    03.5
+03C1:  MOVWF  68
+03C2:  MOVLW  07
+03C3:  MOVWF  69
+03C4:  MOVLW  01
+03C5:  MOVWF  6A
+03C6:  CLRF   6B
+03C7:  BCF    03.5
+03C8:  CALL   16E
+....................                break; 
+03C9:  BSF    03.5
+03CA:  GOTO   3E6
+....................             case 0x08: 
+....................                delay_ms(20); 
+03CB:  MOVLW  14
+03CC:  BSF    03.6
+03CD:  MOVWF  16
+03CE:  BCF    03.6
+03CF:  CALL   159
+....................                create_packet(SLAVE1,0x08,1,0); 
+03D0:  MOVLW  22
+03D1:  BSF    03.5
+03D2:  MOVWF  68
+03D3:  MOVLW  08
+03D4:  MOVWF  69
+03D5:  MOVLW  01
+03D6:  MOVWF  6A
+03D7:  CLRF   6B
+03D8:  BCF    03.5
+03D9:  CALL   16E
+....................                speed = buffer_rx[5] * 10; 
+03DA:  BSF    03.5
+03DB:  MOVF   25,W
+03DC:  MOVWF  68
+03DD:  MOVLW  0A
+03DE:  MOVWF  69
+03DF:  BCF    03.5
+03E0:  GOTO   2DD
+03E1:  MOVF   78,W
+03E2:  MOVWF  70
+....................                break; 
+03E3:  BSF    03.5
+03E4:  GOTO   3E6
+03E5:  BSF    03.5
+....................          } 
+....................          new_packet = FALSE; 
+03E6:  BCF    03.5
+03E7:  CLRF   6F
+....................       } 
+03E8:  GOTO   33D
+....................    } 
+....................  
+.................... } 
+03E9:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3B39   XT NOWDT NOPUT NOBROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT
